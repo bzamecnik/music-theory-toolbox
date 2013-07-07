@@ -67,16 +67,20 @@ $(document).ready(function() {
 			var name = pitchNames[i];
 			circle.append('<button type="button" class="btn btn-large" name="pc-'+i+'" data-index="'+i+'">'+name+'</button>');
 		};
+		var maxWidth = _.max($("#pcCheckboxes button").map(function(){return $(this).width()}));
+		var maxHeight = _.max($("#pcCheckboxes button").map(function(){return $(this).height()}));
+		var halfWidth = maxWidth / 2;
+		var halfHeight = maxHeight / 2;
+		var radius = circle.width() / 2.5;
+		$("#pcCheckboxes button").each(function(){
+			var button = $(this);
+			var index = parseInt(button.data("index"));
+			var angle = (OCTAVE_SIZE / 2 - index) * 2 * Math.PI / OCTAVE_SIZE;
+			button.width(maxWidth);
+			button.css("top", (radius * (1 + Math.cos(angle)) - halfWidth) + "px");
+			button.css("left", (radius * (1 + Math.sin(angle)) - halfHeight) + "px");
+		});
 	})();
-
-	$("#pcCheckboxes button").each(function(){
-		var button = $(this);
-		var index = parseInt(button.data("index"));
-		var angle = (OCTAVE_SIZE / 2 - index) * 2 * Math.PI / OCTAVE_SIZE;
-		var radius = button.parent().width() / 2.5;
-		button.css("top", (radius * (1 + Math.cos(angle))) + "px");
-		button.css("left", (radius * (1 + Math.sin(angle))) + "px");
-	});
 
 	var parsePitchClasses = function(str) {
 		if (str == "") {
@@ -84,7 +88,7 @@ $(document).ready(function() {
 		}
 		return _.map(str.split(","), function(i){ return parseInt(i);});
 	}
-
+	
 	var getSelectedBitSetIndex = function() {
 		return $("#pcCheckboxes").data("bitsetindex");
 	};
