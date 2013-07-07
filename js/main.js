@@ -151,6 +151,12 @@ $(document).ready(function() {
 		});
 	};
 	
+	var invert = function(pitchClasses, offset) {
+		return _.map(pitchClasses, function(pc) {
+			return (offset - pc + OCTAVE_SIZE) % OCTAVE_SIZE;
+		});
+	};
+	
 	var modifyModel = function(modify) {
 		var model = setFromInt(getSelectedBitSetIndex());
 		var modifiedModel = modify(model);
@@ -167,6 +173,12 @@ $(document).ready(function() {
 	$("#transpose-down").click(function(){
 		modifyModel(function(pitchClasses) {
 			return transpose(pitchClasses, -1);
+		});
+	});
+	
+	$("#invert").click(function(){
+		modifyModel(function(pitchClasses) {
+			return invert(pitchClasses, 0);
 		});
 	});
 	
