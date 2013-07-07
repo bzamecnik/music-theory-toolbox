@@ -85,14 +85,14 @@ $(document).ready(function() {
 		var maxHeight = _.max($("#pcCheckboxes button").map(function(){return $(this).height()}));
 		var halfWidth = maxWidth / 2;
 		var halfHeight = maxHeight / 2;
-		var radius = circle.width() / 2.5;
+		var radius = circle.width() / 2 - Math.max(maxWidth, maxHeight);
 		$("#pcCheckboxes button").each(function(){
 			var button = $(this);
 			var index = parseInt(button.data("index"));
 			var angle = (OCTAVE_SIZE / 2 - index) * 2 * Math.PI / OCTAVE_SIZE;
 			button.width(maxWidth);
-			button.css("top", (radius * (1 + Math.cos(angle)) - halfWidth) + "px");
-			button.css("left", (radius * (1 + Math.sin(angle)) - halfHeight) + "px");
+			button.css("top", (radius * (1 + Math.cos(angle)) - halfHeight) + "px");
+			button.css("left", (radius * (1 + Math.sin(angle)) - halfWidth) + "px");
 		});
 	})();
 
@@ -196,7 +196,7 @@ $(document).ready(function() {
 			modifyModel(_.identity);
 		}
 	});
-	
+
 	$("#pcBitSet").next("button").click(function() {
 		var input = $(this).prev("input");
 		if (!input.is(':invalid')) {
