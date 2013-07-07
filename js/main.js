@@ -146,6 +146,20 @@ $(document).ready(function() {
 		});
 	});
 	
+	$("#next-scale-degree").click(function(){
+		modifyModel(function(pitchClasses) {
+			var step = OCTAVE_SIZE - (pitchClasses[pitchClasses.length - 1] || 0);
+			return transpose(pitchClasses, step);
+		});
+	});
+	
+	$("#prev-scale-degree").click(function(){
+		modifyModel(function(pitchClasses) {
+			var step = OCTAVE_SIZE - (pitchClasses[1] || 0);
+			return transpose(pitchClasses, step);
+		});
+	});
+	
 	$("#canonic").change(function(){
 		var pcs = getCanonicPitchClasses();
 		updateViews(pcs);
