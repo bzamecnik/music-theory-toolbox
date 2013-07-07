@@ -38,21 +38,35 @@
     <div class="span6">
       <legend>Numeric representations</legend>
       <h4>Pitch class set</h4>
-      <p>
-        <label>Pitch class set: <input type="text" id="pcNumbers"></input></label>
-        <label>Bit-set: <input type="text" id="pcBitSet"></input></label>
-        <label>Bit-set index: <input type="text" id="pcBitSetIndex"></input></label>
-      </p>
-      <h4>Canonic pitch class set</h4>
-      <p>
-        <select id="canonic"></select>
-      </p>
-      <p>
-        <label>Pitch class set: <input type="text" id="canonicPcNumbers" disabled></input></label>
-        <label>Bit-set: <input type="text" id="canonicPcBitSet" disabled></input></label>
-        <label>Bit-set index:   <input type="text" id="canonicPcBitSetIndex" disabled></input></label>
-      </p>
-      <legend>Library</legend>
+      <div class="control-group">
+        <label class="control-label">Pitch class set</label>
+        <div class="controls"><input type="text" id="pcNumbers"></input></div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit set</label>
+        <div class="controls"><input type="text" id="pcBitSet"></input></div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit-set index</label>
+        <div class="controls"><input type="text" id="pcBitSetIndex"></input></div>
+      </div>
+      
+      <h4>Canonic pitch class set</h4>      
+      <div class="control-group">
+        <label class="control-label">Pitch class set</label>
+        <div class="controls">
+          <p><select id="canonic"></select></p>
+          <span id="canonicPcNumbers" class="uneditable-input"></span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit set</label>
+        <div class="controls"><span id="canonicPcBitSet" class="uneditable-input"></span></div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit-set index</label>
+        <div class="controls"><span id="canonicPcBitSetIndex" class="uneditable-input"></span></div>
+      </div>
     </div>
     </fieldset>
 		</form>

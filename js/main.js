@@ -124,9 +124,9 @@ $(document).ready(function() {
 		$("#pcBitSetIndex").val(bitSetIndex);
 		
 		var canonicBitSetIndex = canonicalize(bitSetIndex);
-		$("#canonicPcNumbers").val(setFromInt(canonicBitSetIndex).join());
-		$("#canonicPcBitSet").val(bitSetFromInt(canonicBitSetIndex));
-		$("#canonicPcBitSetIndex").val(canonicBitSetIndex);
+		$("#canonicPcNumbers").text(setFromInt(canonicBitSetIndex).join());
+		$("#canonicPcBitSet").text(bitSetFromInt(canonicBitSetIndex));
+		$("#canonicPcBitSetIndex").text(canonicBitSetIndex);
 		
 		$("#canonic").val(canonicBitSetIndex);
 	};
