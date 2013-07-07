@@ -17,10 +17,24 @@ $(document).ready(function() {
 		return sum;
 	};
 
-	var bitSetFromInt = function(bitset) {
+	var bitSetFromInt = function(index) {
 		return _.map(octave, function(i){
-			return (bitset & (1 << (octave.length - i - 1))) > 0 ? 1 : 0;
+			return (index & (1 << (octave.length - i - 1))) > 0 ? 1 : 0;
 		}).join("")
+	};
+	
+	var bitSetToInt = function(bitset) {
+		if (!bitset) {
+			return 0;
+		}
+		var index = 0;
+		var size = bitset.length;
+		for (i in bitset) {
+			if (bitset[i] == "1") {
+				index += 1 << (size - i - 1);
+			}
+		}
+		return index;
 	};
 	
 	var shiftBitSetIndex = function(bitSetIndex, offset) {
@@ -174,4 +188,31 @@ $(document).ready(function() {
 		setSelectedBitSetIndex($("#canonic").val());
 		modifyModel(_.identity);
 	});
+	
+	$("#pcNumbers").next("button").click(function(){
+		var input = $(this).prev("input");
+		if (!input.is(':invalid')) {
+			setSelectedBitSetIndex(setToInt(parsePitchClasses(input.val())));
+			modifyModel(_.identity);
+		}
+	});
+	
+	$("#pcBitSet").next("button").click(function() {
+		var input = $(this).prev("input");
+		if (!input.is(':invalid')) {
+			setSelectedBitSetIndex(bitSetToInt(input.val()));
+			modifyModel(_.identity);
+		}
+	});
+	
+	$("#pcBitSetIndex").next("button").click(function() {
+		var input = $(this).prev("input");
+		if (!input.is(':invalid')) {
+			setSelectedBitSetIndex(parseInt(input.val()));
+			modifyModel(_.identity);
+		}
+	});
+	
+	setSelectedBitSetIndex(2628);
+	modifyModel(_.identity);
 });
