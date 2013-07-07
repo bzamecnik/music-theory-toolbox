@@ -85,8 +85,12 @@ $(document).ready(function() {
 		return _.map(str.split(","), function(i){ return parseInt(i);});
 	}
 
-	var getCanonicPitchClasses = function () {
-		return setFromInt($("#canonic").val());
+	var getSelectedBitSetIndex = function() {
+		return $("#pcCheckboxes").data("bitsetindex");
+	};
+	
+	var setSelectedBitSetIndex = function(bitSetIndex) {
+		$("#pcCheckboxes").data("bitsetindex", bitSetIndex);
 	};
 	
 	var getPitchClassesFromCheckboxes = function () {
@@ -95,10 +99,11 @@ $(document).ready(function() {
 	};
 	
 	$("#pcCheckboxes button").click(function(){
-		window.setTimeout(function(){
+		_.defer(function(){
 			var pitchClasses = getPitchClassesFromCheckboxes();
-			updateViews(pitchClasses);
-		}, 100);
+			setSelectedBitSetIndex(setToInt(pitchClasses));
+			modifyModel(_.identity);
+		});
 	});
 	
 	var updateViews = function(pitchClasses) {
@@ -129,8 +134,9 @@ $(document).ready(function() {
 	};
 	
 	var modifyModel = function(modify) {
-		var model = getPitchClassesFromCheckboxes();
+		var model = setFromInt(getSelectedBitSetIndex());
 		var modifiedModel = modify(model);
+		setSelectedBitSetIndex(setToInt(modifiedModel));
 		updateViews(modifiedModel);
 	}
 	
@@ -161,7 +167,7 @@ $(document).ready(function() {
 	});
 	
 	$("#canonic").change(function(){
-		var pcs = getCanonicPitchClasses();
-		updateViews(pcs);
+		setSelectedBitSetIndex($("#canonic").val());
+		modifyModel(_.identity);
 	});
 });
