@@ -8,3 +8,7 @@
 #pcCheckboxes button {
 	position: absolute;
 }
+.form-condensed .control-group {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
