@@ -49,7 +49,7 @@ $(document).ready(function() {
 			return shiftBitSetIndex(bitSetIndex, offset);
 		}));
 	};
-
+	
 	var getRoot = function(bitSetIndex, canonicBitSetIndex) {
 		for (var i = 0; i < OCTAVE_SIZE; i++) {
 				if (shiftBitSetIndex(canonicBitSetIndex, i) == bitSetIndex) {
@@ -57,7 +57,7 @@ $(document).ready(function() {
 				}
 		}
 	};
-
+	
 	var pitchNames = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
 	
 	var pcSetNames = {
@@ -301,6 +301,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	setSelectedBitSetIndex(2628);
+	setSelectedBitSetIndex(145);
 	modifyModel(_.identity);
 });
