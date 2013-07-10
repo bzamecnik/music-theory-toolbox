@@ -51,11 +51,59 @@ $(document).ready(function() {
 	};
 
 	var getRoot = function(bitSetIndex, canonicBitSetIndex) {
-		for (offset in octave) {
-				if (shiftBitSetIndex(canonicBitSetIndex, offset) == bitSetIndex) {
-					return offset;
+		for (var i = 0; i < OCTAVE_SIZE; i++) {
+				if (shiftBitSetIndex(canonicBitSetIndex, i) == bitSetIndex) {
+					return i;
 				}
 		}
+	};
+
+	var pitchNames = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
+	
+	var pcSetNames = {
+		"145": {chord: "X", root: 0},
+		"137": {chord: "Xm", root: 0},
+		"291": {chord: "Xmaj7", root: 1},
+		"329": {chord: "X7", root: 8},
+		"73": {chord: "Xm b5", root: 0},
+		"585": {chord: "Xdim", root: 0, scale: "X symmetric 4-tone"},
+		"273": {chord: "Xaug", root: 0, scale: "X symmetric 3-tone"},
+		"297": {chord: "Xm7", root: 5},
+		"275": {chord: "XmMaj7", root: 1},
+		"133": {chord: "X2", root: 0},
+		"165": {chord: "X2,4", root: 0},
+		//"597": {chord: "X9", root: 2},
+		"589": {chord: "X7 b9", root: 2},
+		"613": {chord: "X7 #9", root: 2},
+		"725": {chord: "X11", root: 2},
+		//"1387": {chord: "X13", root: 8, scale: "X diatonic (major)"},
+		"1387": {scale: "X diatonic (major)", root: 1},
+		"1371": {scale: "X melodic minor", root: 1},
+		"859": {scale: "X harmonic minor", root: 1},
+		"875": {scale: "X harmonic major", root: 1},
+		"871": {scale: "X double harmonic major", root: 1},
+		"1365": {scale: "X symmetric hexatonic", root: 0},
+		"1755": {scale: "X symmetric octatonic", root: 0},
+		"597":  {scale: "pentatonic, complement to X melodic minor", root: 8},
+		"661":  {scale: "pentatonic, complement to X diatonic", root: 6},
+	};
+	
+	var getName = function(bitSetIndex) {
+		var canonic = canonicalize(bitSetIndex);
+		var offset = getRoot(bitSetIndex, canonic);
+		var template = pcSetNames[canonic];
+		var result = {chord:"", scale: ""};
+		if (template) {
+			var root = (offset + template.root + OCTAVE_SIZE) % OCTAVE_SIZE;
+			var rootName = pitchNames[root];
+			if (template.chord) {
+				result.chord = template.chord.replace("X", rootName);
+			}
+			if (template.scale) {
+				result.scale = template.scale.replace("X", rootName);
+			}
+		}
+		return result;
 	};
 
 	(function() {
@@ -83,7 +131,6 @@ $(document).ready(function() {
 			select.append("<option value='"+index+"'>["+setFromInt(index)+"]</option>");
 		});
 		
-		var pitchNames = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
 		var circle = $("#pcCheckboxes");
 		for (i in pitchNames) {
 			var name = pitchNames[i];
@@ -152,6 +199,10 @@ $(document).ready(function() {
 		
 		$("#canonic").val(canonicBitSetIndex);
 		$("#offsetToCanonic").text(getRoot(bitSetIndex, canonicBitSetIndex));
+		
+		var name = getName(bitSetIndex);
+		$("#chordName").text(name.chord);
+		$("#scaleName").text(name.scale);
 	};
 	
 	var transpose = function(pitchClasses, offset) {

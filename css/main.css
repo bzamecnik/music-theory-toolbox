@@ -8,6 +8,15 @@
 #pcCheckboxes button {
 	position: absolute;
 }
+
+#chordName {
+	text-align: center;
+	top: 180px;
+	width: 100%;
+	font-size: 60px;
+	position: absolute;
+}
+
 .form-condensed .control-group {
     margin-top: 0;
     margin-bottom: 5px;

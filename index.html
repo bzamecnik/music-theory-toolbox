@@ -23,7 +23,9 @@
       <div class="row">
         <div class="span6">
       <legend>Pitch class set circle</legend>
-      <p data-toggle="buttons-checkbox" id="pcCheckboxes" data-bitsetindex=""></p>
+      <p data-toggle="buttons-checkbox" id="pcCheckboxes" data-bitsetindex="">
+        <span id="chordName"></span>
+      </p>
       <legend>Operations</legend>
       <p>
         Transpose:
@@ -74,6 +76,10 @@
       <div class="control-group">
         <label class="control-label">Offset to canonic</label>
         <div class="controls"><span id="offsetToCanonic" class="uneditable-input"></span></div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Scale</label>
+        <div class="controls"><span id="scaleName" class="uneditable-input"></span></div>
       </div>
       
       <h4>Canonic pitch class set</h4>      
