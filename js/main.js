@@ -50,6 +50,14 @@ $(document).ready(function() {
 		}));
 	};
 
+	var getRoot = function(bitSetIndex, canonicBitSetIndex) {
+		for (offset in octave) {
+				if (shiftBitSetIndex(canonicBitSetIndex, offset) == bitSetIndex) {
+					return offset;
+				}
+		}
+	};
+
 	(function() {
 		var canonicBitSetIndexes = [0,4095,1365,585,1755,273,819,1911,65,195,325,455,
 		715,845,975,1495,2015,1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,
@@ -143,6 +151,7 @@ $(document).ready(function() {
 		$("#canonicPcBitSetIndex").text(canonicBitSetIndex);
 		
 		$("#canonic").val(canonicBitSetIndex);
+		$("#offsetToCanonic").text(getRoot(bitSetIndex, canonicBitSetIndex));
 	};
 	
 	var transpose = function(pitchClasses, offset) {
