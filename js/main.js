@@ -166,6 +166,10 @@ $(document).ready(function() {
 		});
 	};
 	
+	var complement = function(pitchClasses) {
+		return setFromInt((2 << (OCTAVE_SIZE - 1)) - 1 - setToInt(pitchClasses));
+	};
+	
 	var modifyModel = function(modify) {
 		var model = setFromInt(getSelectedBitSetIndex());
 		var modifiedModel = modify(model);
@@ -188,6 +192,18 @@ $(document).ready(function() {
 	$("#invert").click(function(){
 		modifyModel(function(pitchClasses) {
 			return invert(pitchClasses, 0);
+		});
+	});
+	
+	$("#complement").click(function(){
+		modifyModel(function(pitchClasses) {
+			return complement(pitchClasses);
+		});
+	});
+	
+	$("#clear").click(function(){
+		modifyModel(function(pitchClasses) {
+			return [];
 		});
 	});
 	
