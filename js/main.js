@@ -301,6 +301,20 @@ $(document).ready(function() {
 		}
 	});
 	
-	setSelectedBitSetIndex(145);
+	function getURLParameter(name) {
+	    return decodeURI(
+	        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+	    );
+	}
+	
+	function getInitialBitSetIndex() {
+		var pcs = getURLParameter("pcs");
+		if (pcs && pcs != "null") {
+			return setToInt(parsePitchClasses(pcs));
+		}
+		return 145;
+	}
+
+	setSelectedBitSetIndex(getInitialBitSetIndex());
 	modifyModel(_.identity);
 });
