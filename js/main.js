@@ -86,6 +86,7 @@ $(document).ready(function() {
 		"1755": {scale: "X symmetric octatonic", root: 0},
 		"597":  {scale: "pentatonic, complement to X melodic minor", root: 8},
 		"661":  {scale: "pentatonic, complement to X diatonic", root: 6},
+		"1367": {scale: "X major locrian", root: 8},
 	};
 	
 	var getName = function(bitSetIndex) {
