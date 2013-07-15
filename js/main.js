@@ -68,6 +68,7 @@ $(document).ready(function() {
 		"73": {chord: "Xm b5", root: 0},
 		"585": {chord: "Xdim", root: 0, scale: "X symmetric 4-tone"},
 		"273": {chord: "Xaug", root: 0, scale: "X symmetric 3-tone"},
+		"293": {chord: "Xm7b5", root: 2},
 		"297": {chord: "Xm7", root: 5},
 		"275": {chord: "XmMaj7", root: 1},
 		"133": {chord: "X2", root: 0},
