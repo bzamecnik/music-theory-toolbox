@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Music Theory Toolbox</title>
+  <meta name="viewport" content="width=device-width">
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container" id="app">
+    <h1><i class="icon-music"></i> Music theory toolbox</h1>
+    <form class="form-horizontal form-condensed">
+    <fieldset>
+      <div class="row">
+        <div class="span6">
+      <legend>Pitch class set circle</legend>
+      <p data-toggle="buttons-checkbox" id="pcCheckboxes" data-bitsetindex="">
+        <p>
+          Chord name: <span id="chordName">{{name.chord}}</span>
+        </p>
+        <!-- <button v-for="b in pcCheckboxes"
+          v-bind:name="b.name" v-bind:data-index="b.index"
+          type="button" class="btn btn-large">{{b.label}}</button> -->
+        <template v-for="b in pcCheckboxes">
+            <input
+            v-bind:name="b.name" v-bind:data-index="b.index"
+            v-model="pitchClasses" v-bind:value="b.index" type="checkbox"></input>
+             <label v-bind:for="b.name">{{b.label}}</label>
+          </template>
+      </p>
+      <legend>Operations</legend>
+      <p>
+        Transpose:
+        <button type="button" class="btn" @click="transpose(-1)"><i class="icon-level-down"></i> Down</button>
+        <button type="button" class="btn" @click="transpose(1)"><i class="icon-level-up"></i> Up</button>
+      </p>
+      <p>
+        Scale degrees:
+        <button type="button" class="btn" @click="transposeInScale(-1)"><i class="icon-chevron-left"></i> Previous</button>
+        <button type="button" class="btn" @click="transposeInScale(1)"><i class="icon-chevron-right"></i> Next</button>
+      </p>
+      <p>
+        <button type="button" class="btn" @click="invert"><i class="icon-exchange"></i> Invert</button>
+        <button type="button" class="btn" @click="complement"><i class="icon-adjust"></i> Complement</button>
+        <button type="button" class="btn" @click="clear"><i class="icon-trash"></i> Clear</button>
+      </p>
+    </div>
+    <div class="span6">
+      <legend>Numeric representations</legend>
+      <h4>Pitch class set</h4>
+      <div class="control-group">
+        <label class="control-label">Pitch class set</label>
+        <div class="controls">
+          <input v-model:value="pitchClasses" type="text" pattern="[0-9]+(,[0-9]+){0,12}"></input>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit set</label>
+        <div class="controls">
+          <input v-model:value="bitSet" type="text" pattern="[01]{12}"></input>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit-set index</label>
+        <div class="controls">
+          <input v-model:value="bitSetIndex" type="text" pattern="[0-9]{0,4}"></input>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Offset to canonic</label>
+        <div class="controls"><span class="uneditable-input">{{offsetToCanonic}}</span></div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Scale</label>
+        <div class="controls"><span class="uneditable-input">{{name.scale}}</span></div>
+      </div>
+
+      <h4>Canonic pitch class set</h4>
+      <div class="control-group">
+        <label class="control-label">Pitch class set</label>
+        <div class="controls">
+          <p><select v-model:value="canonicBitSetIndex">
+            <option v-for="c in canonicBitSets" v-bind:value="c.index">{{c.pitchClasses}}</option>
+          </select></p>
+          <span class="uneditable-input">{{canonicPitchClasses}}</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit set</label>
+        <div class="controls"><span class="uneditable-input">{{canonicBitSet}}</span></div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Bit-set index</label>
+        <div class="controls"><span class="uneditable-input">{{canonicBitSetIndex}}</span></div>
+      </div>
+      <legend>Pitch classes from music in real-time?</legend>
+      <p>Would you like to visualize such a pitch class circle from any music in real-time?</p>
+      <p>Take a look at the <strong><a href="http://harmoneye.com/?utm_source=music-theory-toolbox">HarmonEye</a></strong> application.</p>
+    </div>
+    </fieldset>
+    </form>
+  </div>
+
+  <a href="https://github.com/bzamecnik/music-theory-toolbox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script src="js/main-vue.js"></script>
+
+</body>
+</html>
