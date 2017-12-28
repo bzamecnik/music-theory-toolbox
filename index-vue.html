@@ -6,7 +6,6 @@
   <title>Music Theory Toolbox</title>
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
@@ -34,20 +33,20 @@
       <div class="form-group">
         <label class="control-label col-sm-3">Transpose:</label>
         <div class="col-sm-9">
-          <button type="button" class="btn btn-default" @click="transpose(-1)"><i class="glyphicon glyphicon-level-down"></i> Down</button>
-          <button type="button" class="btn btn-default" @click="transpose(1)"><i class="glyphicon glyphicon-level-up"></i> Up</button>
+          <button type="button" class="btn btn-default" @click="transpose(-1)"><i class="glyphicon glyphicon-arrow-down"></i> Down</button>
+          <button type="button" class="btn btn-default" @click="transpose(1)"><i class="glyphicon glyphicon-arrow-up"></i> Up</button>
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-3">Scale degrees:</label>
         <div class="col-sm-9">
-          <button type="button" class="btn btn-default" @click="transposeInScale(-1)"><i class="glyphicon glyphicon-chevron-left"></i> Previous</button>
-          <button type="button" class="btn btn-default" @click="transposeInScale(1)"><i class="glyphicon glyphicon-chevron-right"></i> Next</button>
+          <button type="button" class="btn btn-default" @click="transposeInScale(-1)"><i class="glyphicon glyphicon-arrow-left"></i> Previous</button>
+          <button type="button" class="btn btn-default" @click="transposeInScale(1)"><i class="glyphicon glyphicon-arrow-right"></i> Next</button>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-          <button type="button" class="btn btn-default" @click="invert"><i class="glyphicon glyphicon-exchange"></i> Invert</button>
+          <button type="button" class="btn btn-default" @click="invert"><i class="glyphicon glyphicon-transfer"></i> Invert</button>
           <button type="button" class="btn btn-default" @click="complement"><i class="glyphicon glyphicon-adjust"></i> Complement</button>
           <button type="button" class="btn btn-default" @click="clear"><i class="glyphicon glyphicon-trash"></i> Clear</button>
         </div>
