@@ -24,7 +24,7 @@
         <btn v-for="b in pcCheckboxes"
           input-type="checkbox" :input-value="b.index" size="lg"
           v-model="pitchClasses" :data-index="b.index"
-          :class="{'btn-success': _.contains(pitchClasses, b.index)}">
+          :class="{'btn-success': _.includes(pitchClasses, b.index)}">
           {{b.label}}
         </btn>
       </div>
@@ -127,11 +127,11 @@
 
   <a href="https://github.com/bzamecnik/music-theory-toolbox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="//cdn.jsdelivr.net/npm/vue"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <!-- UIV: Bootstrap 3 + Vue 2 - it includes Bootstrap JS -->
   <script src="//unpkg.com/uiv"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script src="//unpkg.com/lodash@4.17.4"></script>
   <script src="js/main.js"></script>
 
 </body>
