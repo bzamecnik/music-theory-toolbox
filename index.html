@@ -1,126 +1,138 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title>Music Theory Toolbox</title>
-	<meta name="viewport" content="width=device-width">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Music Theory Toolbox</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
-	<!--[if lt IE 7]>
-		<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-	<![endif]-->
-	<div class="container">
-		<h1><i class="icon-music"></i> Music theory toolbox</h1>
-		<form class="form-horizontal form-condensed">
-		<fieldset>
+  <div class="container" id="app">
+    <h1><i class="glyphicon glyphicon-music"></i> Music set theory toolbox</h1>
+    <form class="form-horizontal form-condensed">
+    <fieldset>
       <div class="row">
-        <div class="span6">
+        <div class="col-md-6">
       <legend>Pitch class set circle</legend>
-      <p data-toggle="buttons-checkbox" id="pcCheckboxes" data-bitsetindex="">
-        <span id="chordName"></span>
-      </p>
+
+      <!-- <btn-group> without the 'btn-group' class - we want buttons separate -->
+      <!-- TODO:  -->
+      <div role="group" data-toggle="buttons" id="pcCheckboxes">
+        <span id="chordName">{{name.chord}}</span>
+        <btn v-for="b in pcCheckboxes"
+          input-type="checkbox" :input-value="b.index" size="lg"
+          v-model="pitchClasses" :data-index="b.index"
+          :class="{'btn-success': _.contains(pitchClasses, b.index)}">
+          {{b.label}}
+        </btn>
+      </div>
+
       <legend>Operations</legend>
-      <p>
-        Transpose:
-        <button type="button" class="btn" id="transpose-down"><i class="icon-level-down"></i> Down</button>
-        <button type="button" class="btn" id="transpose-up"><i class="icon-level-up"></i> Up</button>
-      </p>
-      <p>
-        Scale degrees:
-        <button type="button" class="btn" id="prev-scale-degree"><i class="icon-chevron-left"></i> Previous</button>
-        <button type="button" class="btn" id="next-scale-degree"><i class="icon-chevron-right"></i> Next</button>
-      </p>
-      <p>
-        <button type="button" class="btn" id="invert"><i class="icon-exchange"></i> Invert</button>
-        <button type="button" class="btn" id="complement"><i class="icon-adjust"></i> Complement</button>
-        <button type="button" class="btn" id="clear"><i class="icon-trash"></i> Clear</button>
-      </p>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Transpose:</label>
+        <div class="col-sm-9">
+          <button type="button" class="btn btn-default" @click="transpose(-1)"><i class="glyphicon glyphicon-arrow-down"></i> Down</button>
+          <button type="button" class="btn btn-default" @click="transpose(1)"><i class="glyphicon glyphicon-arrow-up"></i> Up</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Scale degrees:</label>
+        <div class="col-sm-9">
+          <button type="button" class="btn btn-default" @click="transposeInScale(-1)"><i class="glyphicon glyphicon-arrow-left"></i> Previous</button>
+          <button type="button" class="btn btn-default" @click="transposeInScale(1)"><i class="glyphicon glyphicon-arrow-right"></i> Next</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button type="button" class="btn btn-default" @click="invert"><i class="glyphicon glyphicon-transfer"></i> Invert</button>
+          <button type="button" class="btn btn-default" @click="complement"><i class="glyphicon glyphicon-adjust"></i> Complement</button>
+          <button type="button" class="btn btn-default" @click="clear"><i class="glyphicon glyphicon-trash"></i> Clear</button>
+        </div>
+      </div>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <legend>Numeric representations</legend>
       <h4>Pitch class set</h4>
-      <div class="control-group">
-        <label class="control-label">Pitch class set</label>
-        <div class="controls">
-          <div class="input-append">
-            <input type="text" id="pcNumbers" pattern="[0-9]+(,[0-9]+){0,12}"></input>
-            <button class="btn" type="button">Set</button>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Pitch class set</label>
+        <div class="col-sm-5">
+          <input v-model:value="pitchClassesStr" type="text" class="form-control" pattern="[0-9]+(,[0-9]+){0,12}"></input>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit set</label>
+        <div class="col-sm-5">
+          <input v-model:value="bitSet" type="text" class="form-control" pattern="[01]{12}"></input>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit-set index</label>
+        <div class="col-sm-5">
+          <input v-model:value="bitSetIndex" type="text" class="form-control" pattern="[0-9]{0,4}"></input>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Offset to canonic</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" :value="offsetToCanonic" disabled></input>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Scale</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" :value="name.scale" disabled></input>
+        </div>
+      </div>
+
+      <h4>Canonic pitch class set</h4>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Pitch class set</label>
+          <div class="col-sm-5">
+            <select v-model:value="canonicBitSetIndex" class="form-control">
+              <option v-for="c in canonicBitSets" v-bind:value="c.index">{{c.pitchClasses}}</option>
+            </select>
           </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit set</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" :value="canonicBitSet" disabled></input>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Bit set</label>
-        <div class="controls">
-          <div class="input-append">
-            <input type="text" id="pcBitSet" pattern="[01]{12}"></input>
-            <button class="btn" type="button">Set</button>
-          </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit-set index</label>
+        <div class="col-sm-5">
+          <input type="text" class="form-control" :value="canonicBitSetIndex" disabled></input>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Bit-set index</label>
-        <div class="controls">
-          <div class="input-append">
-            <input type="text" id="pcBitSetIndex" pattern="[0-9]{0,4}"></input>
-            <button class="btn" type="button">Set</button>
-          </div>
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Offset to canonic</label>
-        <div class="controls"><span id="offsetToCanonic" class="uneditable-input"></span></div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Scale</label>
-        <div class="controls"><span id="scaleName" class="uneditable-input"></span></div>
-      </div>
-      
-      <h4>Canonic pitch class set</h4>      
-      <div class="control-group">
-        <label class="control-label">Pitch class set</label>
-        <div class="controls">
-          <p><select id="canonic"></select></p>
-          <span id="canonicPcNumbers" class="uneditable-input"></span>
-        </div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Bit set</label>
-        <div class="controls"><span id="canonicPcBitSet" class="uneditable-input"></span></div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Bit-set index</label>
-        <div class="controls"><span id="canonicPcBitSetIndex" class="uneditable-input"></span></div>
-      </div>
-      <legend>Pitch classes from music in real-time?</legend>
-      <p>Would you like to visualize such a pitch class circle from any music in real-time?</p>
-      <p>Take a look at the <strong><a href="http://harmoneye.com/?utm_source=music-theory-toolbox">HarmonEye</a></strong> application.</p>
+      <legend>Learn more</legend>
+      <p>
+        <a href="https://en.wikipedia.org/wiki/Set_theory_(music)">Music set theory</a> on Wikipedia.
+      </p>
+      <p>
+        <a href="http://www.visualmusictheory.com/tone-circle.html">Tone circle - the clock analogy</a> blog post.
+      </p>
+      <p>
+        <a href="https://play.google.com/store/apps/details?id=com.harmoneye.tonecircle&hl=cs">Tone Circle</a> app on Android.
+      </p>
+      <p>
+        Written with <i class="glyphicon glyphicon-heart-empty"></i> by <a href="http://bohumirzamecnik.cz">Bohumír Zámečník</a>.
+      </p>
     </div>
     </fieldset>
-		</form>
-	</div>
-  
-  <a href="https://github.com/bzamecnik/music-theory-toolbox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
-  
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-	<script src="js/main.js"></script>
-  
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </form>
+  </div>
 
-    ga('create', 'UA-40015611-2', 'bzamecnik.github.io');
-    ga('send', 'pageview');
-  </script>
+  <a href="https://github.com/bzamecnik/music-theory-toolbox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <!-- UIV: Bootstrap 3 + Vue 2 - it includes Bootstrap JS -->
+  <script src="//unpkg.com/uiv"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script src="js/main.js"></script>
+
 </body>
 </html>
