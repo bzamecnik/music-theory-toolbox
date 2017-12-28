@@ -2,9 +2,9 @@ var OCTAVE_SIZE = 12;
 var octave = _.range(OCTAVE_SIZE);
 
 var setFromInt = function(bitset) {
-  return _.filter(octave, function(i){
+  return normalizePitchClasses(_.filter(octave, function(i){
     return (bitset & (1 << i)) > 0;
-  })
+  }))
 };
 
 var setToInt = function(set) {
@@ -133,19 +133,23 @@ var parsePitchClasses = function(value) {
   } else {
     var values = value;
   }
+  return normalizePitchClasses(values);
+}
+
+var normalizePitchClasses = function(values) {
   return _.sortBy(_.uniq(_.filter(values, v => v >= 0 && v < OCTAVE_SIZE)), _.identity);
 }
 
 var transpose = function(pitchClasses, offset) {
-  return _.map(pitchClasses, function(pc) {
+  return normalizePitchClasses(_.map(pitchClasses, function(pc) {
     return (pc + offset + OCTAVE_SIZE) % OCTAVE_SIZE;
-  });
+  }));
 };
 
 var invert = function(pitchClasses, offset) {
-  return _.map(pitchClasses, function(pc) {
+  return normalizePitchClasses(_.map(pitchClasses, function(pc) {
     return (offset - pc + OCTAVE_SIZE) % OCTAVE_SIZE;
-  });
+  }));
 };
 
 var complement = function(pitchClasses) {
@@ -189,7 +193,7 @@ var app = new Vue({
       set: function(value) {
         var parsedPitchClasses = parsePitchClasses(value);
         if (parsedPitchClasses) {
-          this.pitchClasses = parsedPitchClasses;
+          this.setPitchClasses(parsedPitchClasses);
         }
       }
     },
@@ -198,7 +202,7 @@ var app = new Vue({
         return setToInt(this.pitchClasses);
       },
       set: function(value) {
-        this.pitchClasses = setFromInt(value);
+        this.setPitchClasses(setFromInt(value));
       }
     },
     bitSet: {
@@ -235,8 +239,11 @@ var app = new Vue({
     }
   },
   methods: {
+    setPitchClasses: function(values) {
+      this.pitchClasses = normalizePitchClasses(values);
+    },
     transpose: function(offset) {
-      this.pitchClasses = transpose(this.pitchClasses, offset);
+      this.setPitchClasses(transpose(this.pitchClasses, offset));
     },
     // offset in scale degrees
     transposeInScale: function(steps) {
@@ -246,7 +253,7 @@ var app = new Vue({
       this.transpose(pcOffset);
     },
     invert: function() {
-      this.pitchClasses = invert(this.pitchClasses, 0);
+      this.setPitchClasses(invert(this.pitchClasses, 0));
     },
     complement: function() {
       var mask = (2 << (OCTAVE_SIZE - 1)) - 1;
