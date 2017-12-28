@@ -133,23 +133,23 @@ var parsePitchClasses = function(value) {
   } else {
     var values = value;
   }
-	return _.sortBy(_.uniq(_.filter(values, v => v >= 0 && v < OCTAVE_SIZE)), _.identity);
+  return _.sortBy(_.uniq(_.filter(values, v => v >= 0 && v < OCTAVE_SIZE)), _.identity);
 }
 
 var transpose = function(pitchClasses, offset) {
-	return _.map(pitchClasses, function(pc) {
-		return (pc + offset + OCTAVE_SIZE) % OCTAVE_SIZE;
-	});
+  return _.map(pitchClasses, function(pc) {
+    return (pc + offset + OCTAVE_SIZE) % OCTAVE_SIZE;
+  });
 };
 
 var invert = function(pitchClasses, offset) {
-	return _.map(pitchClasses, function(pc) {
-		return (offset - pc + OCTAVE_SIZE) % OCTAVE_SIZE;
-	});
+  return _.map(pitchClasses, function(pc) {
+    return (offset - pc + OCTAVE_SIZE) % OCTAVE_SIZE;
+  });
 };
 
 var complement = function(pitchClasses) {
-	return setFromInt((2 << (OCTAVE_SIZE - 1)) - 1 - setToInt(pitchClasses));
+  return setFromInt((2 << (OCTAVE_SIZE - 1)) - 1 - setToInt(pitchClasses));
 };
 
 function getURLParameter(name) {
@@ -159,11 +159,11 @@ function getURLParameter(name) {
 }
 
 function getInitialPitchClasses() {
-	var pcs = getURLParameter("pcs");
-	if (pcs && pcs != "null") {
-		return parsePitchClasses(pcs);
-	}
-	return [0, 4, 7] // C major chord;
+  var pcs = getURLParameter("pcs");
+  if (pcs && pcs != "null") {
+    return parsePitchClasses(pcs);
+  }
+  return [0, 4, 7] // C major chord;
 }
 
 var app = new Vue({
@@ -177,8 +177,8 @@ var app = new Vue({
       return {'label': pc, 'index': index, 'name': 'pc-' + index};
     }),
     canonicBitSets: _.sortBy(canonicBitSetIndexes, _.identity).map(function(setIndex) {
-			return {'index': setIndex, 'pitchClasses': "[" + setFromInt(setIndex) + "]"};
-		})
+      return {'index': setIndex, 'pitchClasses': "[" + setFromInt(setIndex) + "]"};
+    })
   },
   computed: {
     // set of pitch classes (array of numbers)
@@ -261,18 +261,18 @@ var app = new Vue({
     var circle = $("#pcCheckboxes");
     var buttons = $(".btn", circle);
     var maxWidth = _.max(buttons.map(function(){return $(this).outerWidth()}));
-		var maxHeight = _.max(buttons.map(function(){return $(this).outerHeight()}));
+    var maxHeight = _.max(buttons.map(function(){return $(this).outerHeight()}));
     var center = circle.width() / 2;
     var buttonDiameter = Math.max(maxWidth, maxHeight);
-		var radius = center - buttonDiameter / 2;
-		buttons.each(function(){
-			var button = $(this);
-			var index = parseInt(button.data("index"));
+    var radius = center - buttonDiameter / 2;
+    buttons.each(function(){
+      var button = $(this);
+      var index = parseInt(button.data("index"));
       // from bottom counter-clockwise (WTF?)
-			var angle = (OCTAVE_SIZE / 2 - index) * 2 * Math.PI / OCTAVE_SIZE;
-			button.css("top", (center + radius * Math.cos(angle)) + "px");
-			button.css("left", (center + radius * Math.sin(angle)) + "px");
-		});
+      var angle = (OCTAVE_SIZE / 2 - index) * 2 * Math.PI / OCTAVE_SIZE;
+      button.css("top", (center + radius * Math.cos(angle)) + "px");
+      button.css("left", (center + radius * Math.sin(angle)) + "px");
+    });
   }
 });
 
