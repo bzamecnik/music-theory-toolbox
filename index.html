@@ -21,11 +21,11 @@
       <!-- TODO:  -->
       <div role="group" data-toggle="buttons" id="pcCheckboxes">
         <span id="chordName">{{name.chord}}</span>
-        <btn v-for="b in pcCheckboxes"
-          input-type="checkbox" :input-value="b.index" size="lg"
-          v-model="pitchClasses" :data-index="b.index"
-          :class="{'btn-success': _.includes(pitchClasses, b.index)}">
-          {{b.label}}
+        <btn v-for="(name, index) in pitchClassNames"
+          input-type="checkbox" :input-value="index" size="lg"
+          v-model="pitchClasses" :data-index="index"
+          :class="{'btn-success': _.includes(pitchClasses, index)}">
+          {{name}}
         </btn>
       </div>
 

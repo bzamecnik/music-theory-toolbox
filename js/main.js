@@ -177,9 +177,7 @@ var app = new Vue({
     // NOTE: v-model of checkbox buttons doesn't work with computed set(),
     // (why?), so we bind to the array of numeric pitch classes here.
     pitchClasses: getInitialPitchClasses(),
-    pcCheckboxes: pitchNames.map(function(pc, index) {
-      return {'label': pc, 'index': index, 'name': 'pc-' + index};
-    }),
+    pitchClassNames: pitchNames,
     canonicBitSets: _.sortBy(canonicBitSetIndexes, _.identity).map(function(setIndex) {
       return {'index': setIndex, 'pitchClasses': "[" + setFromInt(setIndex) + "]"};
     })
