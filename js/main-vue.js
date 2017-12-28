@@ -170,7 +170,7 @@ var app = new Vue({
   el: '#app',
   data: {
     pcCheckboxes: pitchNames.map(function(pc, index) {
-      return {'label': pc[0], 'index': index, 'name': 'pc-' + index};
+      return {'label': pc, 'index': index, 'name': 'pc-' + index};
     }),
     canonicBitSets: _.sortBy(canonicBitSetIndexes, _.identity).map(function(setIndex) {
 			return {'index': setIndex, 'pitchClasses': "[" + setFromInt(setIndex) + "]"};
