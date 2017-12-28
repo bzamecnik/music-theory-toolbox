@@ -5,17 +5,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <title>Music Theory Toolbox</title>
   <meta name="viewport" content="width=device-width">
-  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
   <link href="css/main.css" rel="stylesheet">
 </head>
 <body>
   <div class="container" id="app">
-    <h1><i class="icon-music"></i> Music theory toolbox</h1>
-    <form class="form-horizontal form-condensed">
+    <h1><i class="glyphicon glyphicon-music"></i> Music theory toolbox</h1>
+    <form class="form-horizontal">
     <fieldset>
       <div class="row">
-        <div class="span6">
+        <div class="col-md-6">
       <legend>Pitch class set circle</legend>
       <p data-toggle="buttons-checkbox" id="pcCheckboxes" data-bitsetindex="">
         <p>
@@ -23,78 +23,94 @@
         </p>
         <!-- <button v-for="b in pcCheckboxes"
           v-bind:name="b.name" v-bind:data-index="b.index"
-          type="button" class="btn btn-large">{{b.label}}</button> -->
+          type="button" class="btn btn-default btn-lg">{{b.label}}</button> -->
         <template v-for="b in pcCheckboxes">
-            <input
-            v-bind:name="b.name" v-bind:data-index="b.index"
-            v-model="pitchClasses" v-bind:value="b.index" type="checkbox"></input>
-             <label v-bind:for="b.name">{{b.label}}</label>
+          <div class="checkbox">
+            <label>
+              <input v-bind:name="b.name" v-bind:data-index="b.index"
+                v-model="pitchClasses" v-bind:value="b.index" type="checkbox">
+              {{b.label}}
+             </label>
+           </div>
           </template>
       </p>
       <legend>Operations</legend>
-      <p>
-        Transpose:
-        <button type="button" class="btn" @click="transpose(-1)"><i class="icon-level-down"></i> Down</button>
-        <button type="button" class="btn" @click="transpose(1)"><i class="icon-level-up"></i> Up</button>
-      </p>
-      <p>
-        Scale degrees:
-        <button type="button" class="btn" @click="transposeInScale(-1)"><i class="icon-chevron-left"></i> Previous</button>
-        <button type="button" class="btn" @click="transposeInScale(1)"><i class="icon-chevron-right"></i> Next</button>
-      </p>
-      <p>
-        <button type="button" class="btn" @click="invert"><i class="icon-exchange"></i> Invert</button>
-        <button type="button" class="btn" @click="complement"><i class="icon-adjust"></i> Complement</button>
-        <button type="button" class="btn" @click="clear"><i class="icon-trash"></i> Clear</button>
-      </p>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Transpose:</label>
+        <div class="col-sm-9">
+          <button type="button" class="btn btn-default" @click="transpose(-1)"><i class="glyphicon glyphicon-level-down"></i> Down</button>
+          <button type="button" class="btn btn-default" @click="transpose(1)"><i class="glyphicon glyphicon-level-up"></i> Up</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Scale degrees:</label>
+        <div class="col-sm-9">
+          <button type="button" class="btn btn-default" @click="transposeInScale(-1)"><i class="glyphicon glyphicon-chevron-left"></i> Previous</button>
+          <button type="button" class="btn btn-default" @click="transposeInScale(1)"><i class="glyphicon glyphicon-chevron-right"></i> Next</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button type="button" class="btn btn-default" @click="invert"><i class="glyphicon glyphicon-exchange"></i> Invert</button>
+          <button type="button" class="btn btn-default" @click="complement"><i class="glyphicon glyphicon-adjust"></i> Complement</button>
+          <button type="button" class="btn btn-default" @click="clear"><i class="glyphicon glyphicon-trash"></i> Clear</button>
+        </div>
+      </div>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <legend>Numeric representations</legend>
       <h4>Pitch class set</h4>
-      <div class="control-group">
-        <label class="control-label">Pitch class set</label>
-        <div class="controls">
-          <input v-model:value="pitchClasses" type="text" pattern="[0-9]+(,[0-9]+){0,12}"></input>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Pitch class set</label>
+        <div class="col-sm-6">
+          <input v-model:value="pitchClasses" type="text" class="form-control" pattern="[0-9]+(,[0-9]+){0,12}"></input>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Bit set</label>
-        <div class="controls">
-          <input v-model:value="bitSet" type="text" pattern="[01]{12}"></input>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit set</label>
+        <div class="col-sm-6">
+          <input v-model:value="bitSet" type="text" class="form-control" pattern="[01]{12}"></input>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Bit-set index</label>
-        <div class="controls">
-          <input v-model:value="bitSetIndex" type="text" pattern="[0-9]{0,4}"></input>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit-set index</label>
+        <div class="col-sm-6">
+          <input v-model:value="bitSetIndex" type="text" class="form-control" pattern="[0-9]{0,4}"></input>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Offset to canonic</label>
-        <div class="controls"><span class="uneditable-input">{{offsetToCanonic}}</span></div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Offset to canonic</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" :value="offsetToCanonic" disabled></input>
+        </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Scale</label>
-        <div class="controls"><span class="uneditable-input">{{name.scale}}</span></div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Scale</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" :value="name.scale" disabled></input>
+        </div>
       </div>
 
       <h4>Canonic pitch class set</h4>
-      <div class="control-group">
-        <label class="control-label">Pitch class set</label>
-        <div class="controls">
-          <p><select v-model:value="canonicBitSetIndex">
-            <option v-for="c in canonicBitSets" v-bind:value="c.index">{{c.pitchClasses}}</option>
-          </select></p>
-          <span class="uneditable-input">{{canonicPitchClasses}}</span>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Pitch class set</label>
+          <div class="col-sm-6">
+            <select v-model:value="canonicBitSetIndex" class="form-control">
+              <option v-for="c in canonicBitSets" v-bind:value="c.index">{{c.pitchClasses}}</option>
+            </select>
+          </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit set</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" :value="canonicBitSet" disabled></input>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label">Bit set</label>
-        <div class="controls"><span class="uneditable-input">{{canonicBitSet}}</span></div>
-      </div>
-      <div class="control-group">
-        <label class="control-label">Bit-set index</label>
-        <div class="controls"><span class="uneditable-input">{{canonicBitSetIndex}}</span></div>
+      <div class="form-group">
+        <label class="control-label col-sm-3">Bit-set index</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" :value="canonicBitSetIndex" disabled></input>
+        </div>
       </div>
       <legend>Pitch classes from music in real-time?</legend>
       <p>Would you like to visualize such a pitch class circle from any music in real-time?</p>
@@ -108,7 +124,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
   <script src="js/main-vue.js"></script>
 
