@@ -255,6 +255,27 @@ var app = new Vue({
     clear: function() {
       this.pitchClasses = [];
     }
+  },
+  mounted: function() {
+    // make buttons the same size and arrange them into a circle
+    var circle = $("#pcCheckboxes");
+    var buttons = $(".btn", circle);
+    var maxWidth = _.max(buttons.map(function(){return $(this).outerWidth()}));
+		var maxHeight = _.max(buttons.map(function(){return $(this).outerHeight()}));
+		var halfWidth = maxWidth / 2;
+		var halfHeight = maxHeight / 2;
+    var center = circle.width() / 2;
+		var radius = center - Math.max(maxWidth, maxHeight) / 2;
+    console.log(radius);
+		buttons.each(function(){
+			var button = $(this);
+			var index = parseInt(button.data("index"));
+      // from bottom counter-clockwise (WTF?)
+			var angle = (OCTAVE_SIZE / 2 - index) * 2 * Math.PI / OCTAVE_SIZE;
+			button.width(maxWidth);
+			button.css("top", (center + radius * Math.cos(angle) - halfHeight) + "px");
+			button.css("left", (center + radius * Math.sin(angle) - halfWidth) + "px");
+		});
   }
 });
 

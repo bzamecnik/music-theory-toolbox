@@ -5,13 +5,13 @@
 	position: relative;
 }
 
-#pcCheckboxes button {
+#pcCheckboxes .btn {
 	position: absolute;
 }
 
 #chordName {
 	text-align: center;
-	top: 180px;
+	top: 160px;
 	width: 100%;
 	font-size: 60px;
 	position: absolute;
