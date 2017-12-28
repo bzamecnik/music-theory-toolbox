@@ -17,7 +17,7 @@
 	position: absolute;
 }
 
-.form-condensed .control-group {
-    margin-top: 0;
-    margin-bottom: 5px;
+.form-condensed .form-group {
+  margin-top: 0;
+  margin-bottom: 5px;
 }
