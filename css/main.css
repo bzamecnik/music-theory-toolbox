@@ -1,20 +1,27 @@
 #pcCheckboxes {
-	width: 400px;
-	height: 400px;
-	margin: auto;
-	position: relative;
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  position: relative;
 }
 
 #pcCheckboxes .btn {
-	position: absolute;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 65px;
+  height: 65px;
+  padding: 15px 0;
+  font-size: 25px;
+  line-height: 1;
+  border-radius: 200px;
 }
 
 #chordName {
-	text-align: center;
-	top: 160px;
-	width: 100%;
-	font-size: 60px;
-	position: absolute;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
 }
 
 .form-condensed .form-group {
