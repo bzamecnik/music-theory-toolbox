@@ -17,23 +17,18 @@
       <div class="row">
         <div class="col-md-6">
       <legend>Pitch class set circle</legend>
-      <p data-toggle="buttons-checkbox" id="pcCheckboxes" data-bitsetindex="">
-        <p>
-          Chord name: <span id="chordName">{{name.chord}}</span>
-        </p>
-        <!-- <button v-for="b in pcCheckboxes"
-          v-bind:name="b.name" v-bind:data-index="b.index"
-          type="button" class="btn btn-default btn-lg">{{b.label}}</button> -->
-        <template v-for="b in pcCheckboxes">
-          <div class="checkbox">
-            <label>
-              <input v-bind:name="b.name" v-bind:data-index="b.index"
-                v-model="pitchClasses" v-bind:value="b.index" type="checkbox">
-              {{b.label}}
-             </label>
-           </div>
-          </template>
+
+      <btn-group>
+          <btn v-for="b in pcCheckboxes"
+            input-type="checkbox" :input-value="b.index" v-model="pitchClasses">
+            {{b.label}}
+          </btn>
+      </btn-group>
+
+      <p>
+        Chord name: <span id="chordName">{{name.chord}}</span>
       </p>
+
       <legend>Operations</legend>
       <div class="form-group">
         <label class="control-label col-sm-3">Transpose:</label>
@@ -63,7 +58,7 @@
       <div class="form-group">
         <label class="control-label col-sm-3">Pitch class set</label>
         <div class="col-sm-6">
-          <input v-model:value="pitchClasses" type="text" class="form-control" pattern="[0-9]+(,[0-9]+){0,12}"></input>
+          <input v-model:value="pitchClassesStr" type="text" class="form-control" pattern="[0-9]+(,[0-9]+){0,12}"></input>
         </div>
       </div>
       <div class="form-group">
@@ -123,8 +118,9 @@
   <a href="https://github.com/bzamecnik/music-theory-toolbox"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
 
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <!-- UIV: Bootstrap 3 + Vue 2 - it includes Bootstrap JS -->
+  <script src="//unpkg.com/uiv"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
   <script src="js/main-vue.js"></script>
 

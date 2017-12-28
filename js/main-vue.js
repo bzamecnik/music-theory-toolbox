@@ -133,7 +133,7 @@ var parsePitchClasses = function(value) {
   } else {
     var values = value;
   }
-	return _.uniq(values);
+	return _.sortBy(_.uniq(_.filter(values, v => v >= 0 && v < OCTAVE_SIZE)), _.identity);
 }
 
 var transpose = function(pitchClasses, offset) {
@@ -169,26 +169,36 @@ function getInitialPitchClasses() {
 var app = new Vue({
   el: '#app',
   data: {
+    // This is the place to store the master data.
+    // NOTE: v-model of checkbox buttons doesn't work with computed set(),
+    // (why?), so we bind to the array of numeric pitch classes here.
+    pitchClasses: getInitialPitchClasses(),
     pcCheckboxes: pitchNames.map(function(pc, index) {
       return {'label': pc, 'index': index, 'name': 'pc-' + index};
     }),
     canonicBitSets: _.sortBy(canonicBitSetIndexes, _.identity).map(function(setIndex) {
 			return {'index': setIndex, 'pitchClasses': "[" + setFromInt(setIndex) + "]"};
-		}),
-    // this is the place to store the master data
-    bitSetIndex: setToInt(getInitialPitchClasses())
+		})
   },
   computed: {
     // set of pitch classes (array of numbers)
-    pitchClasses: {
+    pitchClassesStr: {
       get: function() {
-        return setFromInt(this.bitSetIndex);
+        return this.pitchClasses;
       },
       set: function(value) {
-        var pitchClasses = parsePitchClasses(value);
-        if (pitchClasses !== undefined) {
-          this.bitSetIndex = setToInt(pitchClasses);
+        var parsedPitchClasses = parsePitchClasses(value);
+        if (parsedPitchClasses) {
+          this.pitchClasses = parsedPitchClasses;
         }
+      }
+    },
+    bitSetIndex: {
+      get: function() {
+        return setToInt(this.pitchClasses);
+      },
+      set: function(value) {
+        this.pitchClasses = setFromInt(value);
       }
     },
     bitSet: {
@@ -198,7 +208,7 @@ var app = new Vue({
       set: function(value) {
         var bitSetIndex = bitSetToInt(value);
         if (bitSetIndex !== undefined) {
-          this.bitSetIndex = bitSetIndex;
+          this.pitchClasses = setFromInt(bitSetIndex);
         }
       }
     },
