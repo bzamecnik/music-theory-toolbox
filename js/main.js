@@ -56,50 +56,56 @@ var getRoot = function(bitSetIndex, canonicBitSetIndex) {
 
 var pitchNames = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
 
-var pcSetNames = {
-  "145": {chord: "X", root: 0},
-  "137": {chord: "Xm", root: 0},
-  "291": {chord: "Xmaj7", root: 1},
-  "329": {chord: "X7", root: 8},
-  "73": {chord: "Xm b5", root: 0},
-  "585": {chord: "Xdim", root: 0, scale: "X symmetric 4-tone"},
-  "273": {chord: "Xaug", root: 0, scale: "X symmetric 3-tone"},
-  "293": {chord: "Xm7b5", root: 2},
-  "297": {chord: "Xm7", root: 5},
-  "275": {chord: "XmMaj7", root: 1},
-  "133": {chord: "X2", root: 0},
-  "165": {chord: "X2,4", root: 0},
-  //"597": {chord: "X9", root: 2},
-  "589": {chord: "X7 b9", root: 2},
-  "613": {chord: "X7 #9", root: 2},
-  "725": {chord: "X11", root: 2},
-  //"1387": {chord: "X13", root: 8, scale: "X diatonic (major)"},
-  "1387": {scale: "X diatonic (major)", root: 1},
-  "1371": {scale: "X melodic minor", root: 1},
-  "859": {scale: "X harmonic minor", root: 1},
-  "875": {scale: "X harmonic major", root: 1},
-  "871": {scale: "X double harmonic major", root: 1},
-  "1365": {scale: "X symmetric hexatonic", root: 0},
-  "1755": {scale: "X symmetric octatonic", root: 0},
-  "597":  {scale: "pentatonic, complement to X melodic minor", root: 8},
-  "661":  {scale: "pentatonic, complement to X diatonic", root: 6},
-  "1367": {scale: "X major locrian", root: 8},
+var chordNames = {
+  "145": {name: "X", root: 0},
+  "137": {name: "Xm", root: 0},
+  "291": {name: "Xmaj7", root: 1},
+  "329": {name: "X7", root: 8},
+  "73": {name: "Xm b5", root: 0},
+  "585": {name: "Xdim", root: 0},
+  "273": {name: "Xaug", root: 0},
+  "293": {name: "Xm7b5", root: 2},
+  "297": {name: "Xm7", root: 5},
+  "275": {name: "XmMaj7", root: 1},
+  "133": {name: "X2", root: 0},
+  "165": {name: "X2,4", root: 0},
+  "597": {name: "X9", root: 2},
+  "589": {name: "X7 b9", root: 2},
+  "613": {name: "X7 #9", root: 2},
+  "725": {name: "X11", root: 2},
+  "1387": {name: "X13", root: 8}
+};
+
+var scaleNames = {
+  "585": {name: "X symmetric 4-tone", root: 0},
+  "273": {name: "X symmetric 3-tone", root: 0},
+  "1387": {name: "X diatonic (major)", root: 1},
+  "1371": {name: "X melodic minor", root: 1},
+  "859": {name: "X harmonic minor", root: 1},
+  "875": {name: "X harmonic major", root: 1},
+  "871": {name: "X double harmonic major", root: 1},
+  "1365": {name: "X symmetric hexatonic", root: 0},
+  "1755": {name: "X symmetric octatonic", root: 0},
+  "597":  {name: "pentatonic, complement to X melodic minor", root: 8},
+  "661":  {name: "pentatonic, complement to X diatonic", root: 6},
+  "1367": {name: "X major locrian", root: 8},
 };
 
 var getName = function(bitSetIndex) {
   var canonic = canonicalize(bitSetIndex);
   var offset = getRoot(bitSetIndex, canonic);
-  var template = pcSetNames[canonic];
+  var chordTemplate = chordNames[canonic];
+  var scaleTemplate = scaleNames[canonic];
   var result = {chord:"", scale: ""};
-  if (template) {
-    var root = (offset + template.root + OCTAVE_SIZE) % OCTAVE_SIZE;
+  if (chordTemplate) {
+    var root = (offset + chordTemplate.root + OCTAVE_SIZE) % OCTAVE_SIZE;
     var rootName = pitchNames[root];
-    if (template.chord) {
-      result.chord = template.chord.replace("X", rootName);
-    }
-    if (template.scale) {
-      result.scale = template.scale.replace("X", rootName);
-    }
+    result.chord = chordTemplate.name.replace("X", rootName);
+  }
+  if (scaleTemplate) {
+    var root = (offset + scaleTemplate.root + OCTAVE_SIZE) % OCTAVE_SIZE;
+    var rootName = pitchNames[root];
+    result.scale = scaleTemplate.name.replace("X", rootName);
   }
   return result;
 };
